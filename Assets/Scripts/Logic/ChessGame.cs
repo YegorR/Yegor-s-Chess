@@ -169,13 +169,13 @@ class Situation : ICloneable
             {
                 if (!isWhiteKingMoved)
                 {
+                    isWhiteKingMoved = true;
                     if (to.Vertical == 2)
                     {
                         piecesLocation[0, 0] = VOID_CELL;
                         piecesLocation[4, 0] = VOID_CELL;
                         piecesLocation[2, 0] = (ChessPieceType.King, PlayerColor.White);
                         piecesLocation[3, 0] = (ChessPieceType.Rook, PlayerColor.White);
-                        isWhiteKingMoved = true;
                         isWhiteQueenRookMoved = true;
                         return;
                     }
@@ -185,7 +185,6 @@ class Situation : ICloneable
                         piecesLocation[4, 0] = VOID_CELL;
                         piecesLocation[6, 0] = (ChessPieceType.King, PlayerColor.White);
                         piecesLocation[5, 0] = (ChessPieceType.Rook, PlayerColor.White);
-                        isWhiteKingMoved = true;
                         isWhiteKingRookMoved = true;
                         return;
                     }
@@ -195,13 +194,13 @@ class Situation : ICloneable
             {
                 if (!isBlackKingMoved)
                 {
+                    isBlackKingMoved = true;
                     if (to.Vertical == 2)
                     {
                         piecesLocation[0, 7] = VOID_CELL;
                         piecesLocation[4, 7] = VOID_CELL;
                         piecesLocation[2, 7] = (ChessPieceType.King, PlayerColor.Black);
                         piecesLocation[3, 7] = (ChessPieceType.Rook, PlayerColor.Black);
-                        isBlackKingMoved = true;
                         isBlackQueenRookMoved = true;
                         return;
                     }
@@ -211,7 +210,6 @@ class Situation : ICloneable
                         piecesLocation[4, 7] = VOID_CELL;
                         piecesLocation[6, 7] = (ChessPieceType.King, PlayerColor.Black);
                         piecesLocation[5, 7] = (ChessPieceType.Rook, PlayerColor.Black);
-                        isBlackKingMoved = true;
                         isBlackKingRookMoved = true;
                         return;
                     }
@@ -250,8 +248,7 @@ class Situation : ICloneable
         {
             if ((aislePawnCell != null) && (aislePawnCell.Equals(to)))
             {
-                piecesLocation[to.Vertical, to.Horizontal] = VOID_CELL;
-                aislePawnCell = null;
+                piecesLocation[from.Vertical, from.Horizontal] = VOID_CELL;
                 if (isWhiteMoving)
                 {
                     piecesLocation[to.Vertical, to.Horizontal] = (ChessPieceType.Pawn, PlayerColor.White);
@@ -266,9 +263,20 @@ class Situation : ICloneable
                 }
                 return;
             }
+            if (aislePawnCell != null)
+            {
+                aislePawnCell = null;
+            }
+            if (Math.Abs(from.Horizontal - to.Horizontal) == 2)
+            {
+                aislePawnCell = isWhiteMoving ? new Cell(from.Vertical, from.Horizontal + 1) : new Cell(from.Vertical, from.Horizontal - 1);
+            }
         }
-        aislePawnCell = null;
-
+        else
+        {
+            aislePawnCell = null;
+        }
+ 
         piecesLocation[from.Vertical, from.Horizontal] = VOID_CELL;
         if (isWhiteMoving)
         {
@@ -644,11 +652,12 @@ class Situation : ICloneable
         
         if (!isQueenRookMoved)
         {
-            bool allowed = false;
+            bool allowed = true;
             for (int i = 4; i >= 2; i--)
             {
                 if (attackCells.Contains(new Cell(i, hor)))
                 {
+                    allowed = false;
                     break;
                 }
             }
@@ -670,11 +679,12 @@ class Situation : ICloneable
         }
         if (!isKingRookMoved)
         {
-            bool allowed = false;
+            bool allowed = true;
             for (int i = 4; i <= 6; i++)
             {
                 if (attackCells.Contains(new Cell(i, hor)))
                 {
+                    allowed = false;
                     break;
                 }
             }
