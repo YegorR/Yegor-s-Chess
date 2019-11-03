@@ -1,7 +1,7 @@
 ﻿public enum ChessPieceType {
     None,
     King,
-    Quenn,
+    Queen,
     Bishop,
     Knight,
     Rook,

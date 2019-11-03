@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-public class Cell
+public class Cell : ICloneable
 {
     private int horizontal = 0;
 
@@ -59,5 +59,10 @@ public class Cell
     public override int GetHashCode()
     {
         return (vertical * 10) + horizontal;
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
     }
 }

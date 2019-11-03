@@ -2,7 +2,7 @@
 
 public class GameSituation
 {
-    private (ChessPieceType, PlayerColor)[,] piecesLocation;;
+    private (ChessPieceType, PlayerColor)[,] piecesLocation;
     private bool isWhiteMoving;
     private GameStatus status;
     private Dictionary<Cell, ISet<Cell>> allowedMoves;
