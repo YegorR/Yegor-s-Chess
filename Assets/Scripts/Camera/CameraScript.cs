@@ -16,6 +16,7 @@ public class CameraScript : MonoBehaviour
     public float zoomMin = 70; // мин. увеличение
 
     public float sensitivitySize = 1;
+    public float sensetivityMouse2D = 10f;
 
     public float size = 60f;
     public float minimumSize = 50f;
@@ -73,6 +74,23 @@ public class CameraScript : MonoBehaviour
         else if (Input.GetAxis("Mouse ScrollWheel") < 0) z += sensitivitySize;
 
         camera.orthographicSize = Mathf.Clamp(z, minimumSize, maximumSize);
+
+        float x = transform.position.x;
+        float y = transform.position.z;
+
+        if (Input.GetMouseButton(1))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            x -= Input.GetAxis("Mouse X") * sensetivityMouse2D * camera.orthographicSize;
+            y -= Input.GetAxis("Mouse Y") * sensetivityMouse2D * camera.orthographicSize;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        x = Mathf.Clamp(x, -camera.orthographicSize * camera.aspect + 45, camera.orthographicSize * camera.aspect - 45);
+        y = Mathf.Clamp(y, -camera.orthographicSize + 45, camera.orthographicSize - 45);
+        transform.position = new Vector3(x, transform.position.y, y);
     }
 
     public bool Is3D
