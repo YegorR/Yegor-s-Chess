@@ -264,8 +264,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -307,12 +307,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa2cf3c04768214db619959ed6b517f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is3D: 1
   offset: {x: 0, y: 10, z: 75}
-  sensitivity: 3
+  sensitivityZoom: 3
   limit: 90
   zoom: 5
   zoomMax: 150
   zoomMin: 70
+  sensitivitySize: 5
+  size: 20
+  minimumSize: 50
+  maximumSize: 150
+  start2DPosition: {x: 0, y: 10, z: 0}
 --- !u!1 &1769183033
 GameObject:
   m_ObjectHideFlags: 0
