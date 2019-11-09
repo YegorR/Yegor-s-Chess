@@ -9,6 +9,9 @@ public abstract class Piece : MonoBehaviour
     public float deltaCell;
     public Vector3 delta;
 
+    public GameObject wrongMoveObject;
+    public GameObject possibleMoveObject;
+
     protected Cell cell;
 
     public delegate void MoveIsMade(Cell from, Cell to);

@@ -8,6 +8,9 @@ public class Piece3D : Piece
     private bool isDragged = false;
     private Vector3 deltaDrag;
 
+    private GameObject coverUnderPiece = null;
+    private Cell cellNow = null;
+
     private void OnMouseDown()
     {
         if (Block)
@@ -45,12 +48,43 @@ public class Piece3D : Piece
         {
             Vector3 newPosition = ray.GetPoint(distance) - deltaDrag;
             transform.position = newPosition;
+            manageCoverUnderPiece();
         }
 
         if (Input.GetMouseButton(1))
         {
             Move(cell);
             OnMouseUp();
+        }
+    }
+
+    private void manageCoverUnderPiece()
+    {
+        Cell localCell = TransformVectorToCell(transform.position);
+
+        if (localCell != cellNow)
+        {
+            if (coverUnderPiece != null)
+            {
+                Destroy(coverUnderPiece);
+                coverUnderPiece = null;
+            }
+            cellNow = localCell;
+            if ((cellNow == null) || (cellNow.Equals(cell)))
+            {
+                return;
+            }
+
+            if (AllowedMoves.Contains(cellNow))
+            {
+                coverUnderPiece = Instantiate(possibleMoveObject);
+            }
+            else
+            {
+                coverUnderPiece = Instantiate(wrongMoveObject);
+            }
+            coverUnderPiece.transform.position = startBoardPoint + new Vector3(localCell.Vertical, 0, localCell.Horizontal) * deltaCell +
+                new Vector3(5, 0.001f, 5);
         }
     }
 
@@ -61,6 +95,11 @@ public class Piece3D : Piece
             return;
         }
 
+        if (coverUnderPiece != null)
+        {
+            Destroy(coverUnderPiece);
+            coverUnderPiece = null;
+        }
         isDragged = false;
         Cell moveCell = TransformVectorToCell(transform.position);
         if ((moveCell == null) || (!AllowedMoves.Contains(moveCell)))
