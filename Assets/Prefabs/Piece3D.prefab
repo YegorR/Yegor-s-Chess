@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6020731260844112096}
   - component: {fileID: 9130482959470215283}
   - component: {fileID: 1354360060879325479}
-  - component: {fileID: 7976615589129171027}
+  - component: {fileID: -675184328282217744}
   m_Layer: 0
-  m_Name: Pawn3D
+  m_Name: Piece3D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3617057429386195685}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35, y: 2.5, z: -35}
-  m_LocalScale: {x: 5, y: 2, z: 5}
+  m_LocalPosition: {x: -34.22, y: 2.5, z: -30.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3617057429386195685}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 1705324974331375986, guid: 79cdca870d02ec64a8f7211ed5ab7cd7, type: 3}
 --- !u!23 &9130482959470215283
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 579566a75795e7d4bbcca291880e3b88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,13 +94,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startBoardPoint: {x: -40, y: 0, z: -40}
   deltaCell: 10
-  delta: {x: 5, y: 1, z: 5}
+  delta: {x: 5, y: 0, z: 5}
   wrongMoveObject: {fileID: 3971522174145339326, guid: b2e2236a83e4a4745a227fbfeda261f9,
     type: 3}
   possibleMoveObject: {fileID: 4325797817817879466, guid: 3689c04835528bb49a71d1533f4982cb,
     type: 3}
---- !u!65 &7976615589129171027
-BoxCollider:
+  pawn: {fileID: 1705324974331375986, guid: 79cdca870d02ec64a8f7211ed5ab7cd7, type: 3}
+  rook: {fileID: -2806363557253865630, guid: 4d37491a5c247e5448435181efaac4c3, type: 3}
+  knight: {fileID: -8319465574948283117, guid: fa6d2382e68e88041bd9f117c493a432, type: 3}
+  bishop: {fileID: -7929665542823436400, guid: e6b60168d05435f40b8499f25cb8e2a9, type: 3}
+  queen: {fileID: 4385538395738152230, guid: bb55a842e52a22e4c8600cafc5703366, type: 3}
+  king: {fileID: 2534964839176971238, guid: c48d6efc41c3e934f868d1af3b9afca0, type: 3}
+  whiteMaterial: {fileID: 2100000, guid: 579566a75795e7d4bbcca291880e3b88, type: 2}
+  blackMaterial: {fileID: 2100000, guid: a52b32c050044da49884c0f04977be0d, type: 2}
+--- !u!64 &-675184328282217744
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,6 +117,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 1705324974331375986, guid: 79cdca870d02ec64a8f7211ed5ab7cd7, type: 3}

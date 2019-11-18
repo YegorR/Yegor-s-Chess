@@ -76,7 +76,7 @@ public class CameraScript : MonoBehaviour
         camera.orthographicSize = Mathf.Clamp(z, minimumSize, maximumSize);
 
         float x = transform.position.x;
-        float y = transform.position.z;
+        float y = transform.position.y;
 
         if (Input.GetMouseButton(1))
         {
@@ -90,7 +90,7 @@ public class CameraScript : MonoBehaviour
         }
         x = Mathf.Clamp(x, -camera.orthographicSize * camera.aspect + 45, camera.orthographicSize * camera.aspect - 45);
         y = Mathf.Clamp(y, -camera.orthographicSize + 45, camera.orthographicSize - 45);
-        transform.position = new Vector3(x, transform.position.y, y);
+        transform.position = new Vector3(x, y, transform.position.z);
     }
 
     public bool Is3D
@@ -105,7 +105,7 @@ public class CameraScript : MonoBehaviour
             if (!value)
             {
                 transform.position = start2DPosition;
-                transform.eulerAngles = new Vector3(90, 0, 0);
+                transform.eulerAngles = new Vector3(0, 0, 0);
                 camera.orthographic = true;
                 camera.orthographicSize = size;
             }

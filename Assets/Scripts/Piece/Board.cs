@@ -7,19 +7,37 @@ public class Board : MonoBehaviour
     public GameObject chessGameObject;
     private ChessGame chessGame;
 
-
     private Dictionary<Cell, GameObject> pieces = new Dictionary<Cell, GameObject>();
 
+    public GameObject Piece3D;
+    public GameObject Piece2D;
 
-    public GameObject Pawn3D;
-    public GameObject Bishop3D;
-    public GameObject Knight3D;
-    public GameObject Rook3D;
-    public GameObject Queen3D;
-    public GameObject King3D;
+    private bool is3dMode = true;
 
-    public Material whiteMaterial;
-    public Material blackMaterial;
+    public bool GraphicMode
+    {
+        get
+        {
+            return is3dMode;
+        }
+        set
+        {
+            if (value == is3dMode)
+            {
+                return;
+            }
+
+            is3dMode = value;
+            if (!is3dMode)
+            {
+                transform.Rotate(new Vector3(-90, 0, 0));
+            }
+            else
+            {
+                transform.Rotate(new Vector3(90, 0, 0));
+            }
+        }
+    }
 
     void Start()
     {
@@ -37,7 +55,7 @@ public class Board : MonoBehaviour
                 }
                 GameObject newPiece = CreatePiece(piece.Item1, piece.Item2, pieceCell);
                 pieces.Add(pieceCell, newPiece);
-                Piece pieceScript = newPiece.GetComponent<Piece3D>();
+                Piece pieceScript = newPiece.GetComponent<Piece>();
                 if (gameSituation.AllowedMoves.ContainsKey(pieceCell))
                 {
                     pieceScript.AllowedMoves = gameSituation.AllowedMoves[pieceCell];
@@ -55,46 +73,27 @@ public class Board : MonoBehaviour
 
     private GameObject CreatePiece(ChessPieceType chessPieceType, PlayerColor playerColor, Cell cell)
     {
-        GameObject piece;
-        switch (chessPieceType)
+        GameObject pieceObject;
+        if (is3dMode)
         {
-            case ChessPieceType.Pawn:
-                piece = Instantiate(Pawn3D);
-                break;
-            case ChessPieceType.Rook:
-                piece = Instantiate(Rook3D);
-                break;
-            case ChessPieceType.Knight:
-                piece = Instantiate(Knight3D);
-                break;
-            case ChessPieceType.Bishop:
-                piece = Instantiate(Bishop3D);
-                break;
-            case ChessPieceType.Queen:
-                piece = Instantiate(Queen3D);
-                break;
-            case ChessPieceType.King:
-                piece = Instantiate(King3D);
-                break;
-            default:
-                throw new System.Exception("Wrong piece");
-        }
-
-        Renderer renderer = piece.GetComponent<Renderer>();
-        if (playerColor == PlayerColor.White)
-        {
-            renderer.material = whiteMaterial;
+            pieceObject = Instantiate(Piece3D);
         }
         else
         {
-            renderer.material = blackMaterial;
+            pieceObject = Instantiate(Piece2D);
         }
-        Piece script = piece.GetComponent<Piece3D>();
-        script.Move(cell);
-        script.MoveIsMadeEvent += MoveIsMade;
-        script.ChessPieceType = chessPieceType;
-        script.PlayerColor = playerColor;
-        return piece;
+
+        Piece piece = pieceObject.GetComponent<Piece>();
+
+        piece.ChessPieceType = chessPieceType;
+        piece.PlayerColor = playerColor;
+
+       
+        piece.Move(cell);
+        piece.MoveIsMadeEvent += MoveIsMade;
+        piece.ChessPieceType = chessPieceType;
+        piece.PlayerColor = playerColor;
+        return pieceObject;
     }
 
     void MoveIsMade(Cell from, Cell to)
@@ -111,7 +110,7 @@ public class Board : MonoBehaviour
                 if (pieces.ContainsKey(cell))
                 {
                     GameObject pieceObject = pieces[cell];
-                    Piece pieceScriptObject = pieceObject.GetComponent<Piece3D>();
+                    Piece pieceScriptObject = pieceObject.GetComponent<Piece>();
                     if ((pieceScriptObject.PlayerColor == piece.Item2) && (pieceScriptObject.ChessPieceType == piece.Item1))
                     {
                         pieceScriptObject.Block = (myColor != piece.Item2);
@@ -138,7 +137,7 @@ public class Board : MonoBehaviour
                         continue;
                     }
                     GameObject pieceObject = CreatePiece(piece.Item1, piece.Item2, cell);
-                    Piece pieceScriptObject = pieceObject.GetComponent<Piece3D>();
+                    Piece pieceScriptObject = pieceObject.GetComponent<Piece>();
                     pieceScriptObject.Block = (myColor != piece.Item2);
                     if (gameSituation.AllowedMoves.ContainsKey(cell))
                     {
@@ -154,11 +153,5 @@ public class Board : MonoBehaviour
                 }
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
