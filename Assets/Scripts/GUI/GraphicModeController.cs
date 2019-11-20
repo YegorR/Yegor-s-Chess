@@ -9,26 +9,30 @@ public class GraphicModeController : MonoBehaviour
     private ClientManager clientManager;
     private bool is3DMode = true;
 
-    public Sprite image2D;
-    public Sprite image3D;
-
     public void Click()
     {
         is3DMode = !is3DMode;
         clientManager.changeGraphicMode(is3DMode);
 
-        changeSprite();
+        ChangeText();
     }
 
     void Start()
     {
         clientManager = clientManagerObject.GetComponent<ClientManager>();
-        changeSprite();
+        ChangeText();
     }
 
-    private void changeSprite()
+    private void ChangeText()
     {
-        Sprite currentSprite = is3DMode ? image3D : image2D;
-        GetComponent<Image>().sprite = currentSprite;
+        Text text = GetComponentInChildren<Text>();
+        if (is3DMode)
+        {
+            text.text = "3D";
+        }
+        else
+        {
+            text.text = "2D";
+        }
     }
 }
