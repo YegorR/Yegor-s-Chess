@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8872012473103165826}
   - component: {fileID: 9218621388980586472}
   m_Layer: 0
-  m_Name: Board3D
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,13 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d336f427970f7df4fb92a30fc1364842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pawn3D: {fileID: 3617057429386195685, guid: 77c4db97eb4066846a8f59b5bce63a8b, type: 3}
-  Bishop3D: {fileID: 2262946092086687281, guid: 72d1fee9e316913439bea86be5fd2364,
-    type: 3}
-  Knight3D: {fileID: 2727022023409868108, guid: c961e7eccac52584fb232b71ae9152a1,
-    type: 3}
-  Rook3D: {fileID: 6755485298061011558, guid: cbd89c3f23b584c48917e3063a797037, type: 3}
-  Queen3D: {fileID: 1962446862453522974, guid: 44ab58c57d6a7b745a6978f3231500dc, type: 3}
-  King3D: {fileID: 7791652713308189017, guid: 355341097f42e8248aff3d739504b3e9, type: 3}
-  whiteMaterial: {fileID: 2100000, guid: 579566a75795e7d4bbcca291880e3b88, type: 2}
-  blackMaterial: {fileID: 2100000, guid: a52b32c050044da49884c0f04977be0d, type: 2}
+  Piece3D: {fileID: 3617057429386195685, guid: 77c4db97eb4066846a8f59b5bce63a8b, type: 3}
+  Piece2D: {fileID: 499995014065170551, guid: 78772110238b7f74bb185b83784d5234, type: 3}
