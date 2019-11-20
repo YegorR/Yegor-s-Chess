@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.EventSystems;
 
 public class Piece2D : Piece
 {
@@ -150,6 +150,10 @@ public class Piece2D : Piece
     void OnMouseDown()
     {
         if (Block)
+        {
+            return;
+        }
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.EventSystems;
 
 public class Piece3D : Piece
 {
@@ -135,6 +135,10 @@ public class Piece3D : Piece
             return;
         }
         if (Input.GetMouseButton(1))
+        {
+            return;
+        }
+        if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
