@@ -111,13 +111,10 @@ public class CameraScript : MonoBehaviour
             }
             else
             {
-
-                limit = Mathf.Abs(limit);
-                if (limit > 90) limit = 90;
-                offset = new Vector3(offset.x, offset.y, -Mathf.Abs(zoomMax) / 2);
                 transform.position = offset;
                 camera.orthographic = false;
             }
+            is3D = value;
         }
     }
 }

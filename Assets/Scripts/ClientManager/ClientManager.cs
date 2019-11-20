@@ -20,12 +20,17 @@ public class ClientManager : MonoBehaviour
         chessGame = chessObject.GetComponent<ChessGame>();
 
         board.InitializeBoard(chessGame.InitializeBoard());
-        board.GraphicMode = false;
     }
 
     private void MoveIsMade(Cell from, Cell to)
     {
         GameSituation gameSituation = chessGame.MakeMove(from, to);
         board.SetGameSituation(gameSituation);
+    }
+
+    public void changeGraphicMode(bool is3dMode)
+    {
+        board.GraphicMode = is3dMode;
+        Camera.main.GetComponent<CameraScript>().Is3D = is3dMode;
     }
 }
