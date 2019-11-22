@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class ChessGame: MonoBehaviour
+public class ChessGame
 {
     private Situation situation = new Situation();
       

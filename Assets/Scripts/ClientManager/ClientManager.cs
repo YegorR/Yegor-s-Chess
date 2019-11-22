@@ -1,36 +1,39 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientManager : MonoBehaviour
+public class ClientManager
 {
     public GameObject boardPrefab;
-    public GameObject TEMP_chessGamePrefab;
+    public event MoveIsMadeDelegate MoveIsMadeEvent;
 
     private Board board;
-    private ChessGame chessGame;
 
-    void Start()
+    public ClientManager()
     {
-        GameObject boardObject = Instantiate(boardPrefab);
+        GameObject boardObject = GameObject.Instantiate(boardPrefab);
         board = boardObject.GetComponent<Board>();
         board.MoveIsMadeEvent += MoveIsMade;
-
-        GameObject chessObject = Instantiate(TEMP_chessGamePrefab);
-        chessGame = chessObject.GetComponent<ChessGame>();
-
-        board.InitializeBoard(chessGame.InitializeBoard());
     }
 
     private void MoveIsMade(Cell from, Cell to)
     {
-        GameSituation gameSituation = chessGame.MakeMove(from, to);
-        board.SetGameSituation(gameSituation);
+        MoveIsMadeEvent(from, to);
     }
 
-    public void changeGraphicMode(bool is3dMode)
+    public void ChangeGraphicMode(bool is3dMode)
     {
         board.GraphicMode = is3dMode;
         Camera.main.GetComponent<CameraScript>().Is3D = is3dMode;
+    }
+
+    public void Block(bool isBlock, PlayerColor playerColor)
+    {
+        board.Block(isBlock, playerColor);
+    }
+
+    public void SetGameSituation(GameSituation gameSituation)
+    {
+        board.SetGameSituation(gameSituation);
     }
 }

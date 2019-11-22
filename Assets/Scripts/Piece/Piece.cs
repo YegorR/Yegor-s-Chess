@@ -13,15 +13,13 @@ public abstract class Piece : MonoBehaviour
 
     protected Cell cell;
 
-    public delegate void MoveIsMade(Cell from, Cell to);
-    public event MoveIsMade MoveIsMadeEvent;
+    public event MoveIsMadeDelegate MoveIsMadeEvent;
 
-    
 
     public bool Block
     {
         set; get;
-    } = false;
+    } = true;
 
     public ISet<Cell> AllowedMoves
     {

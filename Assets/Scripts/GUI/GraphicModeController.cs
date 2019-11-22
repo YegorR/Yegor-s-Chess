@@ -12,7 +12,7 @@ public class GraphicModeController : MonoBehaviour
     public void Click()
     {
         is3DMode = !is3DMode;
-        clientManager.changeGraphicMode(is3DMode);
+        clientManager.ChangeGraphicMode(is3DMode);
 
         ChangeText();
     }

@@ -11,7 +11,6 @@ public class Board : MonoBehaviour
 
     private bool is3dMode = true;
 
-    public delegate void MoveIsMadeDelegate(Cell from, Cell to);
     public event MoveIsMadeDelegate MoveIsMadeEvent;
 
     public bool GraphicMode
@@ -87,7 +86,6 @@ public class Board : MonoBehaviour
                 {
                     pieceScript.AllowedMoves = new HashSet<Cell>();
                 }
-                pieceScript.Block = (piece.Item2 == PlayerColor.Black);
             }
         }
     }
@@ -137,7 +135,6 @@ public class Board : MonoBehaviour
                     Piece pieceScriptObject = pieceObject.GetComponent<Piece>();
                     if ((pieceScriptObject.PlayerColor == piece.Item2) && (pieceScriptObject.ChessPieceType == piece.Item1))
                     {
-                        pieceScriptObject.Block = (myColor != piece.Item2);
                         if (gameSituation.AllowedMoves.ContainsKey(cell))
                         {
                             pieceScriptObject.AllowedMoves = gameSituation.AllowedMoves[cell];
@@ -162,7 +159,6 @@ public class Board : MonoBehaviour
                     }
                     GameObject pieceObject = CreatePiece(piece.Item1, piece.Item2, cell);
                     Piece pieceScriptObject = pieceObject.GetComponent<Piece>();
-                    pieceScriptObject.Block = (myColor != piece.Item2);
                     if (gameSituation.AllowedMoves.ContainsKey(cell))
                     {
                         pieceScriptObject.AllowedMoves = gameSituation.AllowedMoves[cell];
@@ -175,6 +171,18 @@ public class Board : MonoBehaviour
                     pieces.Add(cell, pieceObject);
                     continue;
                 }
+            }
+        }
+    }
+
+    public void Block(bool isBlock, PlayerColor playerColor)
+    {
+        foreach (Cell cell in pieces.Keys)
+        {
+            Piece piece = pieces[cell].GetComponent<Piece>();
+            if (piece.PlayerColor == playerColor)
+            {
+                piece.Block = isBlock;
             }
         }
     }
