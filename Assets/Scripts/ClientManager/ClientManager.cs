@@ -11,6 +11,8 @@ public class ClientManager : MonoBehaviour
 
     [SerializeField] private GameObject notifyingOpponentExitsPanel;
     [SerializeField] private GameObject notifyingDisconnectPanel;
+    [SerializeField] private GameObject checkmateWhitePanel;
+    [SerializeField] private GameObject checkmateBlackPanel;
 
     public void Start()
     {
@@ -60,9 +62,22 @@ public class ClientManager : MonoBehaviour
     {
         if (gameSituation.GameStatus == GameStatus.OpponentExits)
         {
+            if (endGame) return;
             endGame = true;
             NotifyOpponentExits();
             return;
+        }
+        if (gameSituation.GameStatus == GameStatus.Checkmate)
+        {
+            endGame = true;
+            if (gameSituation.IsWhiteMoving)
+            {
+                NotifyCheckMateWhite();
+            }
+            else
+            {
+                NotifyCheckMateBlack();
+            }
         }
         board.SetGameSituation(gameSituation);
     }
@@ -94,5 +109,25 @@ public class ClientManager : MonoBehaviour
         Block(true, PlayerColor.Black);
         NotifyDisconnect();
         return;
+    }
+
+
+    private void NotifyCheckMateBlack()
+    {
+        checkmateBlackPanel.SetActive(true);
+    }
+
+    private void NotifyCheckMateWhite()
+    {
+        checkmateWhitePanel.SetActive(true);
+    }
+    public void NotifyedCheckMateBlack()
+    {
+        checkmateBlackPanel.SetActive(false);
+    }
+
+    public void NotifyedCheckMateWhite()
+    {
+        checkmateWhitePanel.SetActive(false);
     }
 }
