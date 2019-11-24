@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GraphicModeController : MonoBehaviour
 {
-    public GameObject clientManagerObject;
+    [SerializeField] private GameObject ClientManagerObject;
     private ClientManager clientManager;
     private bool is3DMode = true;
 
@@ -19,9 +19,10 @@ public class GraphicModeController : MonoBehaviour
 
     void Start()
     {
-        clientManager = clientManagerObject.GetComponent<ClientManager>();
+        clientManager = ClientManagerObject.GetComponent<ClientManager>();
         ChangeText();
     }
+
 
     private void ChangeText()
     {

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClientManager
+public class ClientManager : MonoBehaviour
 {
     public GameObject boardPrefab;
     public event MoveIsMadeDelegate MoveIsMadeEvent;
 
     private Board board;
 
-    public ClientManager()
+    public void Start()
     {
         GameObject boardObject = GameObject.Instantiate(boardPrefab);
         board = boardObject.GetComponent<Board>();

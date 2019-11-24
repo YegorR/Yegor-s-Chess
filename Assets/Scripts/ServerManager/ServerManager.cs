@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class ServerManager : MonoBehaviour
+public class ServerManager
 {
     private IPlayer whitePlayer, blackPlayer;
     private ChessGame chessGame;
