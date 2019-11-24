@@ -54,6 +54,7 @@ public class CameraScript : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             X = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityZoom;
             Y += Input.GetAxis("Mouse Y") * sensitivityZoom;
             Y = Mathf.Clamp(Y, -limit, 0);
@@ -61,6 +62,7 @@ public class CameraScript : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         transform.localEulerAngles = new Vector3(-Y, X, 0);
         transform.position = transform.localRotation * offset;
@@ -81,12 +83,14 @@ public class CameraScript : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             x -= Input.GetAxis("Mouse X") * sensetivityMouse2D * camera.orthographicSize;
             y -= Input.GetAxis("Mouse Y") * sensetivityMouse2D * camera.orthographicSize;
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         x = Mathf.Clamp(x, -camera.orthographicSize * camera.aspect + 45, camera.orthographicSize * camera.aspect - 45);
         y = Mathf.Clamp(y, -camera.orthographicSize + 45, camera.orthographicSize - 45);
