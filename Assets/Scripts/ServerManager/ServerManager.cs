@@ -25,6 +25,10 @@ public class ServerManager
         {
             Move(playerAct);
         }
+        else if (playerAct.Act == PlayerAct.ActType.Exit)
+        {
+            Exit(playerAct);
+        }
     }
 
     private void Move(PlayerAct playerAct)
@@ -32,5 +36,23 @@ public class ServerManager
         GameSituation gameSituation = chessGame.MakeMove(playerAct.From, playerAct.To);
         whitePlayer.SetGameSituation(gameSituation);
         blackPlayer.SetGameSituation(gameSituation);
+    }
+
+    private void Exit(PlayerAct playerAct)
+    {
+        IPlayer player;
+        if (playerAct.PlayerColor == PlayerColor.White)
+        {
+            player = blackPlayer;
+        }
+        else
+        {
+            player = whitePlayer;
+        }
+        GameSituation gameSituation = new GameSituation
+        {
+            GameStatus = GameStatus.OpponentExits
+        };
+        player.SetGameSituation(gameSituation);
     }
 }

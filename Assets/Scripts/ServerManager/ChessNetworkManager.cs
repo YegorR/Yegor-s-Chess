@@ -19,4 +19,22 @@ public class ChessNetworkManager : NetworkManager
         }
         base.OnServerConnect(conn);
     }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        NetworkServer.DestroyPlayersForConnection(conn);
+        GameObject.Find("ClientManager").GetComponent<ClientManager>().Disconnect();
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        //base.OnClientDisconnect(conn);
+        GameObject.Find("ClientManager").GetComponent<ClientManager>().Disconnect();
+    }
+
+    public void OnDisable()
+    {
+        StopServer();
+        StopClient();
+    }
 }

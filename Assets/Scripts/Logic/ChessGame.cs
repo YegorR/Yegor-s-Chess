@@ -104,7 +104,13 @@ class Situation : ICloneable
         ISet<Cell> attackedPosition = AttackedPosition();
         CalcAllowedMoves(attackedPosition);
 
-        return new GameSituation(piecesLocation, isWhiteMoving, GameStatus.Normal, allowedMoves);
+        return new GameSituation()
+        {
+            PiecesLocation = piecesLocation,
+            IsWhiteMoving = isWhiteMoving,
+            GameStatus = GameStatus.Normal,
+            AllowedMoves = allowedMoves
+        };
     }
 
 
@@ -117,7 +123,7 @@ class Situation : ICloneable
         }
 
         //2 Сделать собственно ход
-        doMove(from, to);
+        DoMove(from, to);
         isWhiteMoving = !isWhiteMoving;
 
         //3 Проверить ситуацию на шах
@@ -149,11 +155,16 @@ class Situation : ICloneable
             }
         }
 
-        GameSituation gameSituation = new GameSituation(piecesLocation, isWhiteMoving, gameStatus, allowedMoves);
-        return gameSituation;
+        return new GameSituation()
+        {
+            PiecesLocation = piecesLocation,
+            IsWhiteMoving = isWhiteMoving,
+            GameStatus = gameStatus,
+            AllowedMoves = allowedMoves
+        };
     }
 
-    internal void doMove(Cell from, Cell to)
+    internal void DoMove(Cell from, Cell to)
     {
         ChessPieceType piece = piecesLocation[from.Vertical, from.Horizontal].Item1;
         if (piece == ChessPieceType.None)
@@ -762,7 +773,7 @@ class Situation : ICloneable
     private bool SimulateMove(Cell from, Cell to)
     {
         Situation newSituation = (Situation)this.Clone();
-        newSituation.doMove(from, to);
+        newSituation.DoMove(from, to);
         return !newSituation.AttackedPosition().Contains(newSituation.FindKing());
     }
 

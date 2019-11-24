@@ -1,50 +1,24 @@
 ﻿using System.Collections.Generic;
 
-public class GameSituation
-{
-    private (ChessPieceType, PlayerColor)[,] piecesLocation;
-    private bool isWhiteMoving;
-    private GameStatus status;
-    private Dictionary<Cell, ISet<Cell>> allowedMoves;
-
-    public GameSituation((ChessPieceType, PlayerColor)[,] piecesLocation, bool isWhiteMoving, GameStatus status, Dictionary<Cell, ISet<Cell>> allowedMoves)
-    {
-        this.piecesLocation = piecesLocation;
-        this.isWhiteMoving = isWhiteMoving;
-        this.status = status;
-        this.allowedMoves = allowedMoves;
-    }
-
+public class GameSituation{
     public (ChessPieceType, PlayerColor)[,] PiecesLocation
     {
-        get
-        {
-            return piecesLocation;
-        }
+        set; get;
     }
 
     public bool IsWhiteMoving
     {
-        get
-        {
-            return isWhiteMoving;
-        }
+        set; get;
     }
 
     public GameStatus GameStatus
     {
-        get
-        {
-            return status;
-        }
+        set; get;
     }
 
     public Dictionary<Cell, ISet<Cell>> AllowedMoves
     {
-        get
-        {
-            return allowedMoves;
-        }
+        set; get;
     }
 }
 
@@ -68,6 +42,11 @@ public struct SerializedGameSituation
     static public SerializedGameSituation Serialize(GameSituation gameSituation)
     {
         SerializedGameSituation result = new SerializedGameSituation();
+        result.status = (int)gameSituation.GameStatus;
+        if (gameSituation.GameStatus == GameStatus.OpponentExits)
+        {
+            return result;
+        }
 
         result.piecesLocationChessType = new int[64];
         result.piecesLocationColor = new int[64];
@@ -85,7 +64,7 @@ public struct SerializedGameSituation
         }
 
         result.isWhiteMoving = gameSituation.IsWhiteMoving;
-        result.status = (int)gameSituation.GameStatus;
+
 
         //result.allowedMovesKey = new int[gameSituation.AllowedMoves.Keys.Count, 2];
         //result.allowedMovesValues = new int[gameSituation.AllowedMoves.Values.Count][,];
@@ -132,6 +111,16 @@ public struct SerializedGameSituation
 
     static public GameSituation Deserealize(SerializedGameSituation serialized)
     {
+        GameStatus status = (GameStatus)serialized.status;
+
+        if (status == GameStatus.OpponentExits)
+        {
+            return new GameSituation()
+            {
+                GameStatus = status
+            };
+        }
+
         var piecesLocation = new (ChessPieceType, PlayerColor)[8, 8];
 
         int k = 0;
@@ -145,7 +134,7 @@ public struct SerializedGameSituation
             }
         }
         bool isWhiteMoving = serialized.isWhiteMoving;
-        GameStatus status = (GameStatus)serialized.status;
+        
 
         Dictionary<Cell, ISet<Cell>> allowedMoves = new Dictionary<Cell, ISet<Cell>>();
         /*for(int i = 0; i < (serialized.allowedMovesKey.Length / 2); ++i)
@@ -177,6 +166,12 @@ public struct SerializedGameSituation
             allowedMoves.Add(key, valueSet);
         }
 
-        return new GameSituation(piecesLocation, isWhiteMoving, status, allowedMoves);
+        return new GameSituation()
+        {
+            PiecesLocation = piecesLocation,
+            AllowedMoves = allowedMoves,
+            IsWhiteMoving = isWhiteMoving,
+            GameStatus = status
+        };
     }
 }

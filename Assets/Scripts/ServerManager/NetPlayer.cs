@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class NetPlayer : NetworkBehaviour, IPlayer
 {
-    [SerializeField] private GameObject clientManagerPrefab;
     private ClientManager clientManager;
     private PlayerColor playerColor;
 
@@ -21,6 +21,12 @@ public class NetPlayer : NetworkBehaviour, IPlayer
         GameSituation gameSituation = SerializedGameSituation.Deserealize(serializedGameSituation);
         clientManager.SetGameSituation(gameSituation);
 
+        if (gameSituation.GameStatus == GameStatus.OpponentExits)
+        {
+            clientManager.Block(true, PlayerColor.White);
+            clientManager.Block(true, PlayerColor.Black);
+            return;
+        }    
         if ((playerColor == PlayerColor.White) && (gameSituation.IsWhiteMoving)) {
             clientManager.Block(false, PlayerColor.White);
         }
@@ -41,18 +47,12 @@ public class NetPlayer : NetworkBehaviour, IPlayer
         PlayerColor playerColor = (PlayerColor)playerColorInt;
         this.playerColor = playerColor;
         clientManager = GameObject.Find("ClientManager").GetComponent<ClientManager>();
-        clientManager.MoveIsMadeEvent += MoveIsMade;
+        clientManager.ActEvent += PlayerActed;
     }
 
-    private void MoveIsMade(Cell from, Cell to)
+    private void PlayerActed(PlayerAct playerAct)
     {
-        if (!isLocalPlayer) return;
-        PlayerAct playerAct = new PlayerAct
-        {
-            Act = PlayerAct.ActType.Move,
-            From = from,
-            To = to
-        };
+        playerAct.PlayerColor = playerColor;
         CmdAct(SerializedPlayerAct.Serialize(playerAct));
     }
 

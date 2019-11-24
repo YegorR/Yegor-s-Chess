@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class NetFactory
 {
@@ -19,6 +20,7 @@ public class NetFactory
         this.isHost = isHost;
         GameObject networkManagerObject = GameObject.Find("ChessNetworkManager");
         networkManager = networkManagerObject.GetComponent<ChessNetworkManager>();
+        networkManager.NetFactory = this;
 
         if (!isHost)
         {
@@ -39,7 +41,6 @@ public class NetFactory
             }
         }
         this.playerColor = playerColor;
-        networkManager.NetFactory = this;
         networkManager.StartHost();
     }
 

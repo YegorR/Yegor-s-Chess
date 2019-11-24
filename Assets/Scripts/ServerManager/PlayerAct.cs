@@ -9,6 +9,8 @@
 
     public Cell From { get; set; }
     public Cell To { get; set; }
+
+    public PlayerColor PlayerColor { get; set; }
 }
 
 public struct SerializedPlayerAct
@@ -16,12 +18,14 @@ public struct SerializedPlayerAct
     public int act;
     public int fromVertical, fromHorizontal;
     public int toVertical, toHorizontal;
+    public int playerColor;
     
     public static SerializedPlayerAct Serialize(PlayerAct playerAct)
     {
         SerializedPlayerAct result = new SerializedPlayerAct
         {
-            act = (int)playerAct.Act
+            act = (int)playerAct.Act,
+            playerColor = (int)playerAct.PlayerColor
         };
         if (playerAct.Act != PlayerAct.ActType.Move)
         {
@@ -39,7 +43,8 @@ public struct SerializedPlayerAct
     {
         PlayerAct playerAct = new PlayerAct
         {
-            Act = (PlayerAct.ActType)serialized.act
+            Act = (PlayerAct.ActType)serialized.act,
+            PlayerColor = (PlayerColor)serialized.playerColor
         };
         if (playerAct.Act != PlayerAct.ActType.Move)
         {

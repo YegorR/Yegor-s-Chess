@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GraphicModeController : MonoBehaviour
+public class GraphicModeController : GUIComponent
 {
-    [SerializeField] private GameObject ClientManagerObject;
-    private ClientManager clientManager;
+    
     private bool is3DMode = true;
 
     public void Click()
@@ -17,9 +16,9 @@ public class GraphicModeController : MonoBehaviour
         ChangeText();
     }
 
-    void Start()
+    public override void Start()
     {
-        clientManager = ClientManagerObject.GetComponent<ClientManager>();
+        base.Start();
         ChangeText();
     }
 
