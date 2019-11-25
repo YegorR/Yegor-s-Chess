@@ -14,6 +14,21 @@ public class ClientManager : MonoBehaviour
     [SerializeField] private GameObject checkmateWhitePanel;
     [SerializeField] private GameObject checkmateBlackPanel;
 
+    private static ClientManager singlton = null;
+
+    public static ClientManager getInstance()
+    {
+        if (singlton == null)
+        {
+            throw new System.Exception("ClientManager: Singleton не создался!");
+        }
+        return singlton;
+    }
+    void Awake()
+    {
+        singlton = this;
+    }
+
     public void Start()
     {
         GameObject boardObject = GameObject.Instantiate(boardPrefab);
