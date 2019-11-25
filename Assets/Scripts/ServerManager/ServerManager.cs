@@ -6,7 +6,7 @@ public class ServerManager
     private IPlayer whitePlayer, blackPlayer;
     private ChessGame chessGame;
 
-    public void Initialize(IPlayer whitePlayer, IPlayer blackPlayer)
+    public ServerManager(IPlayer whitePlayer, IPlayer blackPlayer)
     {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;

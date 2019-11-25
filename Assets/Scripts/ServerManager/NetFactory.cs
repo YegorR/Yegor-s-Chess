@@ -76,8 +76,7 @@ public class NetFactory
         playersCount++;
         if (playersCount == 2)
         {
-            serverManager = new ServerManager();
-            serverManager.Initialize(whitePlayerObject.GetComponent<NetPlayer>(), blackPlayerObject.GetComponent<NetPlayer>());
+            serverManager = new ServerManager(whitePlayerObject.GetComponent<NetPlayer>(), blackPlayerObject.GetComponent<NetPlayer>());
         }
     }
 }
