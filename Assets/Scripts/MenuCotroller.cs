@@ -20,6 +20,9 @@ public class MenuCotroller : MonoBehaviour
     [SerializeField] private GameObject inputHostField;
     [SerializeField] private GameObject connectButton;
     [SerializeField] private GameObject cancelClientButton;
+    [SerializeField] private GameObject hotSeatButton;
+    [SerializeField] private GameObject startHotSeatButton;
+    [SerializeField] private GameObject cancelHotSeatButton;
 
     private PlayerColor playerColor = PlayerColor.White;
     private string host = "127.0.0.1";
@@ -34,6 +37,17 @@ public class MenuCotroller : MonoBehaviour
     {
         state = State.Multiplayer;
         HandleState();
+    }
+
+    public void ClickHotSeatButton()
+    {
+        state = State.HotSeat;
+        HandleState();
+    }
+
+    public void ClickStartHotSeatButton()
+    {
+        Debug.Log("Начинаем хот сит");
     }
 
     public void ClickExitButton()
@@ -56,6 +70,10 @@ public class MenuCotroller : MonoBehaviour
         {
             state = State.Multiplayer;
             host = "127.0.0.1";
+        }
+        else if (state == State.HotSeat)
+        {
+            state = State.Main;
         }
         HandleState();
     }
@@ -126,6 +144,7 @@ public class MenuCotroller : MonoBehaviour
         switch (state)
         {
             case State.Main:
+                ActivateComponent(hotSeatButton);
                 ActivateComponent(multiplayerButton);
                 ActivateComponent(exitButton);
                 break;
@@ -144,11 +163,15 @@ public class MenuCotroller : MonoBehaviour
                 ActivateComponent(connectButton);
                 ActivateComponent(cancelClientButton);
                 break;
+            case State.HotSeat:
+                ActivateComponent(startHotSeatButton);
+                ActivateComponent(cancelHotSeatButton);
+                break;
         }
     }
 }
 
 enum State
 {
-    Main, Multiplayer, Host, Client
+    Main, Multiplayer, Host, Client, HotSeat
 }
