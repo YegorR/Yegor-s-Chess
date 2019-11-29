@@ -47,7 +47,8 @@ public class MenuCotroller : MonoBehaviour
 
     public void ClickStartHotSeatButton()
     {
-        Debug.Log("Начинаем хот сит");
+        SceneData.Type = SceneData.GameType.HotSeat;
+        SceneManager.LoadScene(1);
     }
 
     public void ClickExitButton()

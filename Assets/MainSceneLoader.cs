@@ -19,6 +19,9 @@ public class MainSceneLoader : MonoBehaviour
                 netFactory = new NetFactory();
                 netFactory.Initialize(false, PlayerColor.None);
                 break;
+            case SceneData.GameType.HotSeat:
+                HotSeatFactory hotSeatFactory = new HotSeatFactory();
+                break;
         }
     }
 }

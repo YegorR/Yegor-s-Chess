@@ -3,38 +3,49 @@ using System.Collections;
 
 public class HotSeatPlayer : IPlayer
 {
-    public event ActedHandler OnActEvent;
+    private bool isActEventSet = false;
+    public event ActedHandler OnActEvent
+    {
+        add
+        {
+            if(!isActEventSet)
+            {
+                m_ActEvent += value;
+                isActEventSet = true;
+            }
+        }
+        remove
+        {
+            m_ActEvent -= value;
+            isActEventSet = false;
+        }
+    }
+
+    private event ActedHandler m_ActEvent;
 
     private ClientManager clientManager;
     private PlayerColor playerColor;
-    private bool isActive = false;
 
-    public HotSeatPlayer(PlayerColor playerColor)
+    public HotSeatPlayer()
     {
-        this.playerColor = playerColor;
+        this.playerColor = PlayerColor.White;
         clientManager = ClientManager.getInstance();
         clientManager.ActEvent += OnPlayerAct;
     }
 
     public void SetGameSituation(GameSituation gameSituation)
     {
-        if ((gameSituation.IsWhiteMoving && (playerColor == PlayerColor.White)) || 
-            (!gameSituation.IsWhiteMoving && (playerColor == PlayerColor.Black))) {
-            isActive = true;
-            clientManager.SetGameSituation(gameSituation);
-        }
-        else
-        {
-            isActive = false;
-        }
-        
+        clientManager.SetGameSituation(gameSituation);
+        clientManager.Block(!gameSituation.IsWhiteMoving, PlayerColor.White);
+        clientManager.Block(gameSituation.IsWhiteMoving,PlayerColor.Black);   
     }
 
     private void OnPlayerAct(PlayerAct playerAct)
     {
-        if (isActive)
+        if (playerAct.Act == PlayerAct.ActType.Exit)
         {
-            OnActEvent(playerAct);
+            return;
         }
+        m_ActEvent(playerAct);
     }
 }
