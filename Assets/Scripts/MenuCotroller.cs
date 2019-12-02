@@ -23,6 +23,7 @@ public class MenuCotroller : MonoBehaviour
     [SerializeField] private GameObject hotSeatButton;
     [SerializeField] private GameObject startHotSeatButton;
     [SerializeField] private GameObject cancelHotSeatButton;
+    [SerializeField] private GameObject AIButton;
 
     private PlayerColor playerColor = PlayerColor.White;
     private string host = "127.0.0.1";
@@ -123,10 +124,12 @@ public class MenuCotroller : MonoBehaviour
         SceneData.Type = SceneData.GameType.Client;
         SceneData.Host = host;
         SceneManager.LoadScene(1);
+    }
 
-        //GameObject.Find("ChessNetworkManager").GetComponent<NetworkManager>().networkAddress = host;
-        //NetFactory netFactory = new NetFactory();
-        //netFactory.Initialize(false, PlayerColor.None);
+    public void ClickAIButton()
+    {
+        state = State.AI;
+        HandleState();
     }
 
     private void HandleState()
@@ -148,6 +151,7 @@ public class MenuCotroller : MonoBehaviour
                 ActivateComponent(hotSeatButton);
                 ActivateComponent(multiplayerButton);
                 ActivateComponent(exitButton);
+                ActivateComponent(AIButton);
                 break;
             case State.Multiplayer:
                 ActivateComponent(hostButton);
@@ -174,5 +178,5 @@ public class MenuCotroller : MonoBehaviour
 
 enum State
 {
-    Main, Multiplayer, Host, Client, HotSeat
+    Main, Multiplayer, Host, Client, HotSeat, AI
 }
