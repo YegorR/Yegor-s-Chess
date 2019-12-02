@@ -4,7 +4,7 @@ using System.Collections;
 public class HotSeatPlayer : IPlayer
 {
     private bool isActEventSet = false;
-    public event ActedHandler OnActEvent
+    public event PlayerActedEventHandler PlayerActedEvent
     {
         add
         {
@@ -21,7 +21,7 @@ public class HotSeatPlayer : IPlayer
         }
     }
 
-    private event ActedHandler m_ActEvent;
+    private event PlayerActedEventHandler m_ActEvent;
 
     private ClientManager clientManager;
     private PlayerColor playerColor;

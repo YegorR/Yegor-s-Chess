@@ -4,14 +4,14 @@ using System.Collections;
 
 public class Board : MonoBehaviour
 {
-    private Dictionary<Cell, GameObject> pieces = new Dictionary<Cell, GameObject>();
+    private readonly Dictionary<Cell, GameObject> pieces = new Dictionary<Cell, GameObject>();
 
     public GameObject Piece3D;
     public GameObject Piece2D;
 
     private bool is3dMode = true;
 
-    public event MoveIsMadeDelegate MoveIsMadeEvent;
+    public event MoveIsMadeEventHandler MoveIsMadeEvent;
 
     public bool GraphicMode
     {

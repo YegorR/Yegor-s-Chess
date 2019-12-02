@@ -105,7 +105,7 @@ public class Piece3D : Piece
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
-    protected override Vector3 TransformCellToVector3(Cell cell)
+    protected override Vector3 TransformCellToVector(Cell cell)
     {
         return startBoardPoint + new Vector3(cell.Vertical, 0, cell.Horizontal) * deltaCell + delta;
     }

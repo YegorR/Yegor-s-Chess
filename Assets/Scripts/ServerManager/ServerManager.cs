@@ -10,8 +10,8 @@ public class ServerManager
     {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
-        whitePlayer.OnActEvent += SetPlayerAct;
-        blackPlayer.OnActEvent += SetPlayerAct;
+        whitePlayer.PlayerActedEvent += SetPlayerAct;
+        blackPlayer.PlayerActedEvent += SetPlayerAct;
 
         chessGame = new ChessGame();
         GameSituation gameSituation = chessGame.InitializeBoard();

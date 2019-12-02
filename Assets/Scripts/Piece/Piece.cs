@@ -13,7 +13,7 @@ public abstract class Piece : MonoBehaviour
 
     protected Cell cell;
 
-    public event MoveIsMadeDelegate MoveIsMadeEvent;
+    public event MoveIsMadeEventHandler MoveIsMadeEvent;
 
 
     public bool Block
@@ -35,13 +35,13 @@ public abstract class Piece : MonoBehaviour
         set; get;
     }
 
-    protected abstract Vector3 TransformCellToVector3(Cell cell);
+    protected abstract Vector3 TransformCellToVector(Cell cell);
 
     protected abstract Cell TransformVectorToCell(Vector3 vector);
 
     public void Move(Cell cell)
     {
-        transform.position = TransformCellToVector3(cell);
+        transform.position = TransformCellToVector(cell);
         this.cell = cell;
     }
 

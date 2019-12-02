@@ -7,7 +7,7 @@ public class NetPlayer : NetworkBehaviour, IPlayer
     private ClientManager clientManager;
     private PlayerColor playerColor;
 
-    public event ActedHandler OnActEvent;
+    public event PlayerActedEventHandler PlayerActedEvent;
 
     public void SetGameSituation(GameSituation gameSituation)
     {
@@ -60,6 +60,6 @@ public class NetPlayer : NetworkBehaviour, IPlayer
     private void CmdAct(SerializedPlayerAct serializedPlayerAct)
     {
         PlayerAct playerAct = SerializedPlayerAct.Deserealize(serializedPlayerAct);
-        OnActEvent(playerAct);
+        PlayerActedEvent(playerAct);
     }
 }

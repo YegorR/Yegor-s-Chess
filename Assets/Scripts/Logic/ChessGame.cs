@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ChessGame
 {
-    private Situation situation = new Situation();
+    private ChessSituation situation = new ChessSituation();
       
 
     public GameSituation MakeMove(Cell from, Cell to)
@@ -17,7 +17,7 @@ public class ChessGame
     }
 }
 
-class Situation : ICloneable
+class ChessSituation : ICloneable
 {
     private static (ChessPieceType, PlayerColor) VOID_CELL = (ChessPieceType.None, PlayerColor.None);
     internal (ChessPieceType, PlayerColor)[,] piecesLocation;
@@ -40,7 +40,7 @@ class Situation : ICloneable
     //Контроль взятия на проходе
     internal Cell aislePawnCell = null;
 
-    internal Situation()
+    internal ChessSituation()
     {
         InitiazeEatenPieces();
     }
@@ -772,14 +772,14 @@ class Situation : ICloneable
 
     private bool SimulateMove(Cell from, Cell to)
     {
-        Situation newSituation = (Situation)this.Clone();
+        ChessSituation newSituation = (ChessSituation)this.Clone();
         newSituation.DoMove(from, to);
         return !newSituation.AttackedPosition().Contains(newSituation.FindKing());
     }
 
     public object Clone()
     {
-        Situation clone = (Situation)MemberwiseClone();
+        ChessSituation clone = (ChessSituation)MemberwiseClone();
         if (aislePawnCell != null)
         {
             clone.aislePawnCell = (Cell)aislePawnCell.Clone();

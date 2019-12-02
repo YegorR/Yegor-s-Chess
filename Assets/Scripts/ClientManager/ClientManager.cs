@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class ClientManager : MonoBehaviour
 {
     public GameObject boardPrefab;
-    public event ActedHandler ActEvent;
+    public event PlayerActedEventHandler ActEvent;
 
     private Board board;
     private bool endGame = false;

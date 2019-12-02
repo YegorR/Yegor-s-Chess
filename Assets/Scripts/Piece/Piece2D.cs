@@ -124,7 +124,7 @@ public class Piece2D : Piece
         spriteRenderer.sprite = sprite;
     }
 
-    protected override Vector3 TransformCellToVector3(Cell cell)
+    protected override Vector3 TransformCellToVector(Cell cell)
     {
         return startBoardPoint + new Vector3(cell.Vertical, cell.Horizontal, 0) * deltaCell + delta;
     }
