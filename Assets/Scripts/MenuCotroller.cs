@@ -24,6 +24,8 @@ public class MenuCotroller : MonoBehaviour
     [SerializeField] private GameObject startHotSeatButton;
     [SerializeField] private GameObject cancelHotSeatButton;
     [SerializeField] private GameObject AIButton;
+    [SerializeField] private GameObject cancelAIButton;
+    [SerializeField] private GameObject startAIButton;
 
     private PlayerColor playerColor = PlayerColor.White;
     private string host = "127.0.0.1";
@@ -66,7 +68,6 @@ public class MenuCotroller : MonoBehaviour
         else if (state == State.Host)
         {
             state = State.Multiplayer;
-            playerColor = PlayerColor.White;
         }
         else if (state == State.Client)
         {
@@ -74,6 +75,10 @@ public class MenuCotroller : MonoBehaviour
             host = "127.0.0.1";
         }
         else if (state == State.HotSeat)
+        {
+            state = State.Main;
+        }
+        else if (state == State.AI)
         {
             state = State.Main;
         }
@@ -132,6 +137,13 @@ public class MenuCotroller : MonoBehaviour
         HandleState();
     }
 
+    public void ClickStartAIButton()
+    {
+        SceneData.Type = SceneData.GameType.Ai;
+        SceneData.PlayerColor = playerColor;
+        SceneManager.LoadScene(1);
+    }
+
     private void HandleState()
     {
         void ActivateComponent(GameObject obj)
@@ -171,6 +183,11 @@ public class MenuCotroller : MonoBehaviour
             case State.HotSeat:
                 ActivateComponent(startHotSeatButton);
                 ActivateComponent(cancelHotSeatButton);
+                break;
+            case State.AI:
+                ActivateComponent(colorChoice);
+                ActivateComponent(startAIButton);
+                ActivateComponent(cancelAIButton);
                 break;
         }
     }
