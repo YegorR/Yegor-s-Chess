@@ -20,6 +20,31 @@ public class GameSituation{
     {
         set; get;
     }
+
+    public bool isWhiteKingCastlingPossible
+    {
+        set; get;
+    }
+
+    public bool isWhiteQueenCastlingPossible
+    {
+        set; get;
+    }
+
+    public bool isBlackKingCastlingPossible
+    {
+        set; get;
+    }
+
+    public bool isBlackQueenCastlingPossible
+    {
+        set; get;
+    }
+
+    public Cell aislePawnCell
+    {
+        set; get;
+    }
 }
 
 public struct SerializedGameSituation
@@ -38,6 +63,14 @@ public struct SerializedGameSituation
     public int[] allowedMovesValuesHorizontal;
 
     public int[] allowedMovesValuesBoards;
+
+    public bool isWhiteKingCastlingPossible;
+    public bool isWhiteQueenCastlingPossible;
+    public bool isBlackKingCastlingPossible;
+    public bool isBlackQueenCastlingPossible;
+
+    public int aislePawnVertical;
+    public int aislePawnHorizontal;
 
     static public SerializedGameSituation Serialize(GameSituation gameSituation)
     {
@@ -106,6 +139,24 @@ public struct SerializedGameSituation
             k++;
         }
 
+        result.isWhiteKingCastlingPossible = gameSituation.isWhiteKingCastlingPossible;
+        result.isWhiteQueenCastlingPossible = gameSituation.isWhiteQueenCastlingPossible;
+        result.isBlackKingCastlingPossible = gameSituation.isBlackKingCastlingPossible;
+        result.isBlackQueenCastlingPossible = gameSituation.isBlackQueenCastlingPossible;
+
+        if (gameSituation.aislePawnCell != null)
+        {
+            result.aislePawnVertical = gameSituation.aislePawnCell.Vertical;
+            result.aislePawnHorizontal = gameSituation.aislePawnCell.Horizontal;
+
+        }
+        else
+        {
+            result.aislePawnHorizontal = -1;
+            result.aislePawnVertical = -1;
+        }
+        
+
         return result;
     }
 
@@ -166,12 +217,21 @@ public struct SerializedGameSituation
             allowedMoves.Add(key, valueSet);
         }
 
-        return new GameSituation()
+        GameSituation gameSituation = new GameSituation()
         {
             PiecesLocation = piecesLocation,
             AllowedMoves = allowedMoves,
             IsWhiteMoving = isWhiteMoving,
-            GameStatus = status
+            GameStatus = status,
+            isWhiteKingCastlingPossible = serialized.isWhiteKingCastlingPossible,
+            isWhiteQueenCastlingPossible = serialized.isWhiteQueenCastlingPossible,
+            isBlackKingCastlingPossible = serialized.isBlackKingCastlingPossible,
+            isBlackQueenCastlingPossible = serialized.isBlackQueenCastlingPossible
         };
+        if (serialized.aislePawnVertical != -1)
+        {
+            gameSituation.aislePawnCell = new Cell(serialized.aislePawnVertical, serialized.aislePawnHorizontal);
+        }
+        return gameSituation;
     }
 }

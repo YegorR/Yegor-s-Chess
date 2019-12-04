@@ -43,6 +43,16 @@ public class Cell : ICloneable
         Horizontal = horizontal;
     }
 
+    public Cell(String cellString)
+    {
+        if (cellString.Length != 2)
+        {
+            return;
+        }
+        Vertical = cellString[0] - 'a';
+        Horizontal = cellString[1] - '1';
+    }
+
     public override bool Equals(object obj)
     {
         if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -64,5 +74,12 @@ public class Cell : ICloneable
     public object Clone()
     {
         return MemberwiseClone();
+    }
+
+    public override string ToString()
+    {
+        char verticalChar = Convert.ToChar(vertical + Convert.ToInt32('a'));
+        char horizontalChar = Convert.ToChar(vertical + Convert.ToInt32('1'));
+        return "" + verticalChar + horizontalChar;
     }
 }

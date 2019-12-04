@@ -104,13 +104,16 @@ class ChessSituation : ICloneable
         ISet<Cell> attackedPosition = AttackedPosition();
         CalcAllowedMoves(attackedPosition);
 
-        return new GameSituation()
+        GameSituation gameSituation = new GameSituation()
         {
             PiecesLocation = piecesLocation,
             IsWhiteMoving = isWhiteMoving,
             GameStatus = GameStatus.Normal,
-            AllowedMoves = allowedMoves
+            AllowedMoves = allowedMoves,
+            aislePawnCell = aislePawnCell
         };
+
+        return gameSituation;
     }
 
 
@@ -160,7 +163,11 @@ class ChessSituation : ICloneable
             PiecesLocation = piecesLocation,
             IsWhiteMoving = isWhiteMoving,
             GameStatus = gameStatus,
-            AllowedMoves = allowedMoves
+            AllowedMoves = allowedMoves,
+            isWhiteKingCastlingPossible = (!isWhiteKingMoved) && (!isWhiteKingRookMoved),
+            isWhiteQueenCastlingPossible = (!isWhiteKingMoved) && (!isWhiteQueenRookMoved),
+            isBlackKingCastlingPossible = (!isBlackKingMoved) && (!isBlackKingRookMoved),
+            isBlackQueenCastlingPossible = (!isBlackKingMoved) && (!isBlackQueenRookMoved)
         };
     }
 
