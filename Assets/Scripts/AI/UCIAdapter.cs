@@ -11,6 +11,9 @@ public class UCIAdapter
     public delegate void EngineMovedEventHandler(Cell from, Cell to);
     public event EngineMovedEventHandler EngineMovedEvent;
 
+    public bool IsReady
+    { get; set; } = false;
+
     public UCIAdapter(string enginePath)
     {
         process = new Process();
@@ -34,7 +37,12 @@ public class UCIAdapter
 
     private void ReceiveProcessData(object sender, DataReceivedEventArgs e)
     {
-        UnityEngine.Debug.Log(e.Data);
+        if (e.Data == null)
+        {
+            UnityEngine.Debug.Log("engine => " + "Нул");
+            return;
+        }
+        UnityEngine.Debug.Log("engine => " + e.Data);
         State oldState = state;
 
         string msg = e.Data.Trim();
@@ -48,6 +56,7 @@ public class UCIAdapter
                 }
                 SendCommand("ucinewgame");
                 state = State.Ready;
+                IsReady = true;
                 break;
             case State.Run:
                 if ((msgWords.Length < 1) || (!msgWords[0].Equals("bestmove")))
@@ -73,7 +82,7 @@ public class UCIAdapter
 
     private void SendCommand(string command)
     {
-        UnityEngine.Debug.Log(command);
+        UnityEngine.Debug.Log("GUI => " + command);
         process.StandardInput.WriteLine(command);
     }
 
@@ -159,6 +168,7 @@ public class UCIAdapter
             {
                 fen += noPieceCount.ToString();
             }
+            fen += '/';
         }
         fen += " ";
 

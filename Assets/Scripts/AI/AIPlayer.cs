@@ -16,10 +16,21 @@ public class AIPlayer : IPlayer
         uciAdapter = new UCIAdapter(Application.dataPath + RELATIVE_ENGINE_PATH);
         uciAdapter.EngineMovedEvent += OnEngineMoved;
         uciAdapter.Start();
+        while(!uciAdapter.IsReady)
+        {
+            
+        }
+        UCIThreadAdapter uciThreadAdapter = UCIThreadAdapter.GetInstance();
+        uciThreadAdapter.playerActedEvent += OnPlayerAct;
+
     }
     public void SetGameSituation(GameSituation gameSituation)
     {
-        uciAdapter.SetGameSituation(gameSituation);
+        if (((gameSituation.IsWhiteMoving) && (playerColor == PlayerColor.White)) || 
+            ((!gameSituation.IsWhiteMoving) && (playerColor == PlayerColor.Black)))
+        {
+            uciAdapter.SetGameSituation(gameSituation);
+        }
     }
 
     private void OnEngineMoved(Cell from, Cell to)
@@ -31,6 +42,13 @@ public class AIPlayer : IPlayer
             To = to,
             PlayerColor = playerColor
         };
+        UCIThreadAdapter uciThreadAdapter = UCIThreadAdapter.GetInstance();
+        uciThreadAdapter.SetPlayerAct(playerAct);
+    }
+
+    private void OnPlayerAct(PlayerAct playerAct)
+    {
         PlayerActedEvent(playerAct);
     }
+
 }

@@ -22,6 +22,9 @@ public class MainSceneLoader : MonoBehaviour
             case SceneData.GameType.HotSeat:
                 HotSeatFactory hotSeatFactory = new HotSeatFactory();
                 break;
+            case SceneData.GameType.Ai:
+                AIFabric aIFabric = new AIFabric();
+                break;
         }
     }
 }
